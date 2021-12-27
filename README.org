@@ -1,0 +1,53 @@
+#+TITLE: CAP Cyber Defense Scoring Engine
+
+Provides a configurable scoring engine that can be used to provide training environments for cyber defense competitions.
+
+This project is primarily designed to be deployed at a cyber range with present virtual machine images, but that doesn't mean it won't work in other cases.
+
+* Project Goals
+** Easy to set up
+	Competitors must be able to set this up in such a way that it can't be messed up, and for event organizers the focus should be on creating the challenges, not doing tech support
+** Capable of handling multiple competing teams at once
+	It should be easy for competition organizers to add more teams and get them connected
+** Ease of set up and integration in a native way for the target systems, e.g.:
+*** Linux: Systemd service and native binary and web interface for competitors
+*** Windows: Service managed by sc.exe and native binary and web interface for competitors
+*** Controller server: Docker container and docker-compose configuration for easy setup
+
+* Project Non-Goals
+** Competition Integrity
+	This project is for training purposes and competitions done in good faith, not necessarily real competitions
+
+* Project Architecture
+** ScoringEngine.Models
+	Contains models that are used to represent application and database state
+** ScoringEngine.Client
+	The client that is to be distributed to Windows and Linux VMs to compute scores and report them to the central server
+
+	Provides a web interface to competitors in order to inform them of the README for their system as well as their current scoring report
+** ScoringEngine.Server
+	A central organizing server that allows competition managers to see the current status of competitors as well as modifying system and team information
+
+* Network Architecture
+** Client
+	Needs outgoing port 5001 towards the server, to report scores
+	
+	Needs incoming to port 8000 allowed from the local computer, to allow competitors to access their control panel
+** Server
+	Needs incoming to port 5000 and 5001 for the management interface as well as API gateway for clients
+
+* Planned Features
+** Packaging system
+	.NET 6 provides a way to compile to a single binary, but associated configuration and installation instructions needs to be provided
+	
+	If possible, also use GitHub actions to generate artifacts automatically
+** Better documentation
+	Provide documentation on what functions are available to the scripts that are used for task configuration
+** Styling/branding
+	A better name than "Cyber Defense Scoring Engine 2"
+** Competition Integrity
+	Actually get the programs working together so that in game snooping isn't practical
+** Autocomplete for scoring items
+	In the editors for the scoring items, provide autocomplete to make it somewhat easier to program with
+** Scoring item templates
+	Make it easy to scaffold certain types of training problems

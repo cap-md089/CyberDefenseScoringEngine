@@ -14,10 +14,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\ScoringEngine.Common.Utilities\ScoringEngine.Common.Utilities.csproj" />
-  </ItemGroup>
-	
-  <ItemGroup>
     <Protobuf Include="..\Common\cyberdefense-service.proto">
       <Link>Protos\cyberdefense-service.proto</Link>
     </Protobuf>

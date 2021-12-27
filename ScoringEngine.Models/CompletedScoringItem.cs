@@ -5,7 +5,6 @@ using System.Linq;
 using System.Text.Json.Serialization;
 using System.Transactions;
 using Google.Protobuf.WellKnownTypes;
-using ScoringEngine.Common.Utilities;
 
 namespace ScoringEngine.Models
 {
@@ -62,7 +61,7 @@ namespace ScoringEngine.Models
 
         public Services.CompletedScoringItem ToMessage() => new()
         {
-            ScoringItem = Optional.HandleOptional<ScoringItem, Services.ScoringItem>(item => item.ToMessage())(ScoringItem),
+            ScoringItem = ScoringItem?.ToMessage(),
             ApplicationTime = Timestamp.FromDateTime(DateTime.SpecifyKind(ApplicationTime, DateTimeKind.Utc)),
             ScoringItemId = ScoringItemId,
             Status = (Services.CompletedScoringItem.Types.ScoringItemStatus)CompletionStatus,

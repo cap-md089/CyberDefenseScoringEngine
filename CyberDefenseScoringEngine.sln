@@ -10,14 +10,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{01DE21
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScoringEngine.Server", "ScoringEngine.Server\ScoringEngine.Server.csproj", "{556BE545-D7C0-481B-8EC7-E7BAF822D9C2}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScoringEngine.Common.Utilities", "ScoringEngine.Common.Utilities\ScoringEngine.Common.Utilities.csproj", "{E57D7ADE-E599-4A36-8CCC-11D9E52CC738}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScoringEngine.Client", "ScoringEngine.Client\ScoringEngine.Client.csproj", "{03775D5D-0E05-45F6-9D36-4F8722F6FA96}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{AAB563C9-7B30-48BC-8240-0BE463AEFFB7}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
 		docker-compose.dev.yml = docker-compose.dev.yml
+		README.org = README.org
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScoringEngine.Models", "ScoringEngine.Models\ScoringEngine.Models.csproj", "{ADAD4C4E-E6BA-44D3-860F-A8C619495D7F}"
@@ -32,10 +31,6 @@ Global
 		{556BE545-D7C0-481B-8EC7-E7BAF822D9C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{556BE545-D7C0-481B-8EC7-E7BAF822D9C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{556BE545-D7C0-481B-8EC7-E7BAF822D9C2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E57D7ADE-E599-4A36-8CCC-11D9E52CC738}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E57D7ADE-E599-4A36-8CCC-11D9E52CC738}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E57D7ADE-E599-4A36-8CCC-11D9E52CC738}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E57D7ADE-E599-4A36-8CCC-11D9E52CC738}.Release|Any CPU.Build.0 = Release|Any CPU
 		{03775D5D-0E05-45F6-9D36-4F8722F6FA96}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{03775D5D-0E05-45F6-9D36-4F8722F6FA96}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{03775D5D-0E05-45F6-9D36-4F8722F6FA96}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -49,7 +44,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{E57D7ADE-E599-4A36-8CCC-11D9E52CC738} = {01DE2107-5A3C-4D88-AC9F-724E780C578F}
 		{ADAD4C4E-E6BA-44D3-860F-A8C619495D7F} = {01DE2107-5A3C-4D88-AC9F-724E780C578F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
