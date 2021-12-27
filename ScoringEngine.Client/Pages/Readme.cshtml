@@ -1,0 +1,16 @@
+﻿@page
+@model ScoringEngine.Client.Pages.ReadmeModel
+@{
+    ViewData["Title"] = "README";
+}
+
+<div>
+    @if (Model.ReadmeHtml is null)
+    {
+        @Html.DisplayFor(model => model.RequestError)
+    }
+    else
+    {
+        @Html.Raw(Model.ReadmeHtml)
+    }
+</div>

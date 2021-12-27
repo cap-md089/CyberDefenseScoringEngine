@@ -1,0 +1,151 @@
+syntax = "proto3";
+
+option csharp_namespace = "ScoringEngine.Services";
+
+package scoringengine;
+
+import "google/protobuf/timestamp.proto";
+
+message CommsError {
+	string message = 1;
+}
+
+message CompetitionSystem {
+	int32 id = 1;
+	string readmeText = 2;
+	string systemIdentifier = 3;
+	repeated ScoringItem scoringItems = 4;
+}
+
+message ScoringItem {
+	int32 id = 1;
+	string name = 2;
+	int32 systemIdentifier = 3;
+	int32 points = 4;
+	enum ScriptType {
+		LUA = 0;
+		PYTHON = 1;
+	};
+	ScriptType scriptType = 5;
+	string script = 6;
+	enum ItemType {
+		TASK = 0;
+		PENALTY = 1;
+	}
+	ItemType itemType = 7;
+}
+
+message RegisteredVM {
+	string id = 1;
+	int32 teamId = 2;
+	int32 systemIdentifier = 3;
+	google.protobuf.Timestamp lastCheckIn = 4;
+	bool isConnectedNow = 5;
+	repeated CompletedScoringItem history = 6;
+}
+
+message CompetitionTeam {
+	int32 id = 1;
+	string name = 2;
+	repeated RegisteredVM vms = 3;
+}
+
+message CompletedScoringItem {
+	int32 scoringItemId = 1;
+	string vmId = 2;
+	enum ScoringItemStatus {
+		ADDED = 0;
+		REMOVED = 1;
+	};
+	ScoringItemStatus status = 3;
+	google.protobuf.Timestamp applicationTime = 4;
+	RegisteredVM vm = 5;
+	ScoringItem scoringItem = 6;
+}
+
+message SessionInfo {
+	string vmId = 1;
+}
+
+service Session {
+	rpc SubscribeToCommands (RegisteredVM) returns (stream ClientCommands);
+	rpc RegisterVM (RegisterVMRequest) returns (VMRegistration);
+	rpc Ping (PingRequest) returns (Pong);
+}
+
+service Scoring {
+	rpc GetAvailableSystems (SystemsRequest) returns (SystemsQueryResponse);
+	rpc GetSystem (SystemRequest) returns (SystemQueryResponse);
+	rpc SetScoringItemCompletionStatus (UpdateScoringItemRequest) returns (ScoringItemUpdateResponse);
+	rpc GetTeams (TeamsRequest) returns (TeamsRequestResponse);
+	rpc GetTeam (TeamRequest) returns (CompetitionTeam);
+}
+
+message ClientCommands {
+	oneof command {
+		PingRequest ping = 1;
+		CloseConnection close = 2;
+	};
+}
+
+message RegisterVMRequest {
+	int32 teamId = 1;
+	int32 systemIdentifier = 2;
+	string vmId = 3;
+}
+
+message VMRegistration {
+	oneof result {
+		RegisteredVM registration = 1;
+		CommsError error = 2;
+	};
+}
+
+message SystemsRequest {
+	SessionInfo session = 1;
+}
+
+message SystemsQueryResponse {
+	repeated CompetitionSystem systems = 1;
+}
+
+message SystemUpdateResponse {
+
+}
+
+message PingRequest {
+}
+
+message Pong {
+}
+
+message UpdateScoringItemRequest {
+	SessionInfo session = 1;
+	repeated int32 removedItemIds = 2;
+	repeated int32 addedItemIds = 3;
+}
+
+message ScoringItemUpdateResponse {
+}
+
+message CloseConnection {
+}
+
+message TeamsRequest {
+}
+
+message TeamsRequestResponse {
+	repeated CompetitionTeam teams = 1;
+}
+
+message TeamRequest {
+	int32 teamId = 1;
+}
+
+message SystemRequest {
+	int32 systemIdentifier = 1;
+}
+
+message SystemQueryResponse {
+	CompetitionSystem system = 1;
+}

@@ -1,0 +1,68 @@
+﻿@page
+@using ScoringEngine.Models
+@model ScoringEngine.Server.Pages.ScoringItems.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>ScoringItem</h4>
+<hr />
+<div class="row">
+    <div class="col-md-8">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="ScoringItem.ID" />
+            <input type="hidden" asp-for="ScoringItem.CompetitionSystemID" />
+            <div class="form-group">
+                <label asp-for="ScoringItem.Name" class="control-label"></label>
+                <input asp-for="ScoringItem.Name" class="form-control" />
+                <span asp-validation-for="ScoringItem.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ScoringItem.Points" class="control-label"></label>
+                <input asp-for="ScoringItem.Points" class="form-control" />
+                <span asp-validation-for="ScoringItem.Points" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ScoringItem.ScoringItemType" class="control-label"></label>
+                <select asp-for="ScoringItem.ScoringItemType" class="form-control" asp-items="Html.GetEnumSelectList<ScoringItemType>()"></select>
+                <span asp-validation-for="ScoringItem.ScoringItemType" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ScoringItem.ScriptType" class="control-label"></label>
+                <select asp-for="ScoringItem.ScriptType" class="form-control" id="script-language-selector" asp-items="Html.GetEnumSelectList<ScriptType>()"></select>
+                <span asp-validation-for="ScoringItem.ScriptType" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ScoringItem.Script" class="control-label"></label>
+                <div id="editor" style="min-height: 400px" name="ScoringItem.Script"></div>
+                <input asp-for="ScoringItem.Script" type="hidden" id="task-input" />
+                <span asp-validation-for="ScoringItem.Script" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="../Systems/Details" asp-route-id="@Model.ScoringItem.CompetitionSystemID">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    
+    <script src="~/lib/monaco/loader.js"></script>
+    <script src="~/js/editors.js"></script>
+    <script>
+        setupEditor({
+            initialValue: @Html.Raw(Json.Serialize(Model.ScoringItem.Script)),
+            form: 'edit-form',
+            input: 'task-input'
+        });
+    </script>
+}

@@ -1,0 +1,58 @@
+﻿@page
+@using ScoringEngine.Models
+@model ScoringEngine.Client.Pages.ScoringReportModel
+@{
+    ViewData["Title"] = "Scoring Report";
+}
+
+<h1>Scoring Report</h1>
+
+<hr />
+
+@if (Model.RequestError is not null)
+{
+    <div class="text-center">
+        There was an error generating the scoring report:
+        <p>
+            @Html.DisplayFor(model => model.RequestError)
+        </p>
+    </div>
+}
+else if (Model.CurrentVm is null || Model.CurrentSystem is null)
+{
+    <div class="text-center">
+        Your machine does not appear to be fully registered. Please contact a competition admin for help.
+    </div>
+}
+else
+{
+    <div>
+        <h2>Report for @Html.DisplayFor(model => model.CurrentSystem!.SystemIdentifier)</h2>
+
+        <hr />
+
+        @{
+            var tasks = CompletedScoringItem.CalculateCurrentStatus(Model.CurrentVm.ScoringHistory).Where(v => v.ScoringItemType == ScoringItemType.Task);
+        }
+        <h3>@Model.CurrentVm.Points points scored out of a total of @Model.PossiblePoints(Model.CurrentSystem) points</h3>
+        <ul>
+            @foreach (var task in tasks)
+            {
+                <li>@Html.DisplayFor(model => task.Name) - @task.Points</li>
+            }
+        </ul>
+
+        <hr />
+
+        @{
+            var penalties = CompletedScoringItem.CalculateCurrentStatus(Model.CurrentVm.ScoringHistory).Where(v => v.ScoringItemType == ScoringItemType.Penalty).ToList();
+        }
+        <h3>@penalties.Select(p => p.Points).Sum() points have been removed due to penalties</h3>
+        <ul>
+            @foreach (var penalty in penalties)
+            {
+                <li>@Html.DisplayFor(model => penalty.Name) - @penalty.Points</li>
+            }
+        </ul>
+    </div>
+}

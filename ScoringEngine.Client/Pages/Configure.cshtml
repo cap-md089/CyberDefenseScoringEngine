@@ -1,0 +1,44 @@
+﻿@page
+@model ScoringEngine.Client.Pages.RegisterVMModel
+@{
+    ViewData["Title"] = "Configure Computer";
+}
+
+<h1>Configure Computer</h1>
+
+<hr />
+
+<div class="row">
+    <div class="col-md-7">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @if (Model.ServerHost is null)
+            {
+                <div class="form-group">
+                    <label asp-for="ServerHost" class="label-name">Server Host Address</label>
+                    <input asp-for="ServerHost" class="form-control"/>
+                    <span asp-validation-for="ServerHost"></span>
+                </div>
+            }
+            @if (Model.SystemIdentifier is null && Model.ServerHost is not null)
+            {
+                <div class="form-group">
+                    <label asp-for="SystemIdentifier" class="label-name">System Configuration</label>
+                    <select asp-for="SystemIdentifier" class="form-control" asp-items="Model.SystemsSelection"></select>
+                    <span asp-validation-for="SystemIdentifier"></span>
+                </div>
+            }
+            @if (Model.TeamID is null && Model.ServerHost is not null)
+            {
+                <div class="form-group">
+                    <label asp-for="TeamID" class="label-name">Team</label>
+                    <select asp-for="TeamID" class="form-control" asp-items="Model.TeamsSelection"></select>
+                    <span asp-validation-for="TeamID"></span>
+                </div>
+            }
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>

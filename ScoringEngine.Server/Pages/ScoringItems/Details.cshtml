@@ -1,0 +1,51 @@
+﻿@page
+@model ScoringEngine.Server.Pages.ScoringItems.DetailsModel
+
+@{
+    ViewData["Title"] = "Scoring Item Details";
+}
+
+<h1>Scoring Item Details - @Html.DisplayFor(model => model.ScoringItem.Name)</h1>
+
+<div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ScoringItem.Points)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ScoringItem.Points)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ScoringItem.ScoringItemType)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ScoringItem.ScoringItemType)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ScoringItem.ScriptType)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ScoringItem.ScriptType)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ScoringItem.Script)
+        </dt>
+        <dd class="col-sm-10" id="editor" style="min-height: 400px"></dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.ScoringItem.ID">Edit</a> |
+    <a asp-page="../Systems/Details" asp-route-id="@Model.ScoringItem.CompetitionSystemID">Back to List</a>
+</div>
+
+@section Scripts {
+    <script src="~/lib/monaco/loader.js"></script>
+    <script src="~/js/editors.js"></script>
+    <script>
+        setupEditor({
+            initialValue: @Html.Raw(Json.Serialize(Model.ScoringItem.Script)),
+            readonly: true
+        });
+    </script>
+}

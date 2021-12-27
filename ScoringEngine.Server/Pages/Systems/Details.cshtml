@@ -1,0 +1,81 @@
+﻿@page
+@using ScoringEngine.Models
+@model ScoringEngine.Server.Pages.Systems.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div>
+    <h1>System Information - @Model.CompetitionSystem.SystemIdentifier</h1>
+    <hr />
+    <h4>Basic Information</h4>
+    <div>
+        <a asp-page="./Edit" asp-route-id="@Model.CompetitionSystem.ID">Edit</a> |
+        <a asp-page="./Index">Back to List</a>
+    </div>
+    <dl class="row">
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.CompetitionSystem.SystemIdentifier)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.CompetitionSystem.SystemIdentifier)
+        </dd>
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.CompetitionSystem.ReadmeText)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.Raw(Model.ReadmeHtml)
+        </dd>
+    </dl>
+    <hr />
+    <h4>Scoring Items</h4>
+    <div>
+        <a asp-page="../ScoringItems/Create" asp-route-systemidentifier="@Model.CompetitionSystem.ID">Create New Scoring Item</a>
+    </div>
+    @if (Model.CompetitionSystem.ScoringItems.Count == 0)
+    {
+        <i>There are no scoring items for this system</i>
+    }
+    else
+    {
+        <table class="table">
+            <thead>
+            <tr>
+                <th>
+                    Item Name
+                </th>
+                <th>
+                    Points
+                </th>
+                <th>
+                    Task or Penalty
+                </th>
+                <th></th>
+            </tr>
+            </thead>
+            
+            <tbody>
+            @foreach (var item in Model.CompetitionSystem.ScoringItems)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Points)
+                    </td>
+                    <td>
+                        @(item.ScoringItemType == ScoringItemType.Penalty ? "Penalty" : "Task")
+                    </td>
+                    <th>
+                        <a asp-page="../ScoringItems/Edit" asp-route-id="@item.ID">Edit</a> |
+                        <a asp-page="../ScoringItems/Details" asp-route-id="@item.ID">Details</a> |
+                        <a asp-page="../ScoringItems/Delete" asp-route-id="@item.ID">Delete</a>
+                    </th>
+                </tr>
+            }
+            </tbody>
+        </table>
+    }
+</div>

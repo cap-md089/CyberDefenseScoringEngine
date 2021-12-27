@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Google.Protobuf" Version="3.19.1" />
+    <PackageReference Include="Grpc.Core" Version="2.42.0" />
+    <PackageReference Include="Grpc.Tools" Version="2.42.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\ScoringEngine.Common.Utilities\ScoringEngine.Common.Utilities.csproj" />
+  </ItemGroup>
+	
+  <ItemGroup>
+    <Protobuf Include="..\Common\cyberdefense-service.proto">
+      <Link>Protos\cyberdefense-service.proto</Link>
+    </Protobuf>
+  </ItemGroup>
+
+</Project>
